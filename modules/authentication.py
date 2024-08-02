@@ -101,6 +101,8 @@ def authentication():
         if action == "1":
             user_id = login()
             if user_id is not None:
+                clear()
+                print('Successfully logged in!')
                 return user_id
         else:
             create_account()

@@ -5,6 +5,6 @@ from modules.menu import menu
 def main():
     initialize()
     user_id = authentication()
-    menu(user_id)
+    menu(user_id[0])
 
 main()

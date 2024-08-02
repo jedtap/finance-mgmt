@@ -4,6 +4,7 @@ import sqlite3
 USERS_DB_PATH = os.path.join("databases", "users.db")
 TRANSACTIONS_DB_PATH = os.path.join("databases", "transactions.db")
 
+
 def create_users_db():
     conn = sqlite3.connect(USERS_DB_PATH)
     c = conn.cursor()
@@ -19,6 +20,7 @@ def create_users_db():
     conn.commit()
     conn.close()
 
+
 def create_transactions_db():
     conn = sqlite3.connect(TRANSACTIONS_DB_PATH)
     c = conn.cursor()
@@ -30,13 +32,13 @@ def create_transactions_db():
             amount REAL,
             date DATE,
             category TEXT,
-            user_id INTEGER,
-            type TEXT
+            user_id INTEGER
         )
     """
     )
     conn.commit()
     conn.close()
+
 
 def initialize():
     if not os.path.exists("databases"):
