@@ -26,15 +26,15 @@ def display_recent_transactions():
     if recent_transactions == []:
         print("*No recent transactions")
     else:
-        print("# \t Item \t\t\t Amount \t Date \t Category")
+        print("# \t Item \t\t\t Amount \t Date \t\t Category")
         for index, data in enumerate(recent_transactions):
             if len(data[1]) < 6:
                 print(
-                    f"{index+1} \t {data[1]} \t\t\t {data[2]} \t\t {data[3]} \t {data[4]}"
+                    f"{index+1} \t {data[1]} \t\t\t {data[2]} \t\t {str(data[3])[:7]} \t {data[4]}"
                 )
             else:
                 print(
-                    f"{index+1} \t {data[1]} \t\t {data[2]} \t\t {data[3]} \t {data[4]}"
+                    f"{index+1} \t {data[1]} \t\t {data[2]} \t\t {str(data[3])[:7]} \t {data[4]}"
                 )
 
 
@@ -102,7 +102,7 @@ def edit_transaction():
         selection = input("Enter number from 1 to 5: ")
         clear()
 
-        if 0 < int(selection) < len(recent_transactions):
+        if 0 < int(selection) <= len(recent_transactions):
             edit_item(selection)
             print("Successfully edited the item!")
             break
@@ -125,15 +125,15 @@ def edit_item(selection):
 
     print("Transaction to edit:")
 
-    print("Item \t\t\t Amount \t Date \t Category")
+    print("Item \t\t\t Amount \t Date \t\t Category")
 
     if len(transaction_to_edit[1]) < 6:
         print(
-            f"{transaction_to_edit[1]} \t\t\t {transaction_to_edit[2]} \t\t {transaction_to_edit[3]} \t {transaction_to_edit[4]}"
+            f"{transaction_to_edit[1]} \t\t\t {transaction_to_edit[2]} \t\t {str(transaction_to_edit[3])[:7]} \t {transaction_to_edit[4]}"
         )
     else:
         print(
-            f"{transaction_to_edit[1]} \t\t {transaction_to_edit[2]} \t\t {transaction_to_edit[3]} \t {transaction_to_edit[4]}"
+            f"{transaction_to_edit[1]} \t\t {transaction_to_edit[2]} \t\t {str(transaction_to_edit[3])[:7]} \t {transaction_to_edit[4]}"
         )
 
     item = input("Re-enter name of item: ")
@@ -181,12 +181,43 @@ What category does this fall?
         SET item = ?, amount = ?, date = ?, category = ?
         WHERE id = ?
         """,
-        (item, amount, date, category, item_id)
+        (item, amount, date, category, item_id),
     )
 
     conn.commit()
     conn.close()
     clear()
+
+
+def delete_transaction():
+    global recent_transactions
+    while True:
+        display_recent_transactions()
+        print("What transaction you wanted to delete?")
+        selection = input("Enter number from 1 to 5: ")
+
+        if 0 < int(selection) <= len(recent_transactions):
+            confirm = input("Are you sure to delete? (Enter either Y or N): ")
+            if confirm == "Y" or confirm == "y":
+                item_id = recent_transactions[int(selection) - 1][0]
+
+                conn = sqlite3.connect(TRANSACTIONS_DB_PATH)
+                c = conn.cursor()
+                c.execute(
+                    """
+                    DELETE FROM transactions
+                    WHERE id = ?
+                    """,
+                    (item_id,),
+                )
+                conn.commit()
+                conn.close()
+
+                clear()
+                print("Successfully deleted the item!")
+                break
+        else:
+            print("Transaction does not exist! Please try again.")
 
 
 def transactions(user_id_passed):
@@ -213,7 +244,8 @@ What would you want to do today?
                 clear()
                 edit_transaction()
             case "3":
-                print("case 3")
+                clear()
+                delete_transaction()
             case "4":
                 clear()
                 return None
