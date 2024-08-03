@@ -6,7 +6,7 @@ def menu(user_id):
         print(
             """What do you want to do today?
 
-1 - Add new Income/Expense
+1 - Add/edit Income or Expense
 2 - Set a budget
 3 - Manage Investments
 4 - Reports
