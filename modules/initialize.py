@@ -3,6 +3,7 @@ import sqlite3
 
 USERS_DB_PATH = os.path.join("databases", "users.db")
 TRANSACTIONS_DB_PATH = os.path.join("databases", "transactions.db")
+BUDGETS_DB_PATH = os.path.join("databases", "budgets.db")
 
 
 def create_users_db():
@@ -40,9 +41,28 @@ def create_transactions_db():
     conn.close()
 
 
+def create_budgets_db():
+    conn = sqlite3.connect(BUDGETS_DB_PATH)
+    c = conn.cursor()
+    c.execute(
+        """
+        CREATE TABLE IF NOT EXISTS budgets (
+            id INTEGER PRIMARY KEY,
+            category TEXT,
+            amount REAL,
+            date DATE,
+            user_id INTEGER
+        )
+    """
+    )
+    conn.commit()
+    conn.close()
+
+
 def initialize():
     if not os.path.exists("databases"):
         os.makedirs("databases")
 
     create_users_db()
     create_transactions_db()
+    create_budgets_db()

@@ -1,5 +1,6 @@
 from modules.clear import clear
 from modules.transactions import transactions
+from modules.budget import budget
 
 def menu(user_id):
     while True:
@@ -7,7 +8,7 @@ def menu(user_id):
             """What do you want to do today?
 
 1 - Add/edit Income or Expense
-2 - Set a budget
+2 - Set and edit a budget
 3 - Manage Investments
 4 - Reports
 5 - Logout and exit
@@ -19,7 +20,7 @@ def menu(user_id):
             case "1":
                 transactions(user_id)
             case "2":
-                print("case 2")
+                budget(user_id)
             case "3":
                 print("case 3")
             case "4":
