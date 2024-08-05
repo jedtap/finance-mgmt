@@ -2,7 +2,7 @@ from modules.clear import clear
 from modules.transactions import transactions
 from modules.budget import budget
 from modules.investments import investments
-
+from modules.reports import reports
 
 def menu(user_id):
     while True:
@@ -26,7 +26,7 @@ def menu(user_id):
             case "3":
                 investments(user_id)
             case "4":
-                print("case 4")
+                reports(user_id)
             case "5":
                 print("Successfully logged out. Thank you for coming!")
                 return None

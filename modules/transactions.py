@@ -44,7 +44,7 @@ def add_transaction():
     amount = input("Enter amount in USD: ")
     year = input("Enter year the transaction was made (Ex: 2024): ")
     month = input("Enter month the transaction was made (Ex: 02): ")
-    date = f"{year}-{month}-{1}"
+    date = f"{year}-{month}-01"
 
     while True:
         print(
@@ -140,7 +140,7 @@ def edit_item(selection):
     amount = input("Re-enter amount in USD: ")
     year = input("Re-enter year the transaction was made (Ex: 2024): ")
     month = input("Re-enter month the transaction was made (Ex: 02): ")
-    date = f"{year}-{month}-{1}"
+    date = f"{year}-{month}-01"
 
     while True:
         print(
