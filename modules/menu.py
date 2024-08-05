@@ -1,6 +1,8 @@
 from modules.clear import clear
 from modules.transactions import transactions
 from modules.budget import budget
+from modules.investments import investments
+
 
 def menu(user_id):
     while True:
@@ -22,7 +24,7 @@ def menu(user_id):
             case "2":
                 budget(user_id)
             case "3":
-                print("case 3")
+                investments(user_id)
             case "4":
                 print("case 4")
             case "5":
