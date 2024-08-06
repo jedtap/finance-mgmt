@@ -5,6 +5,8 @@ from modules.clear import clear
 
 TRANSACTIONS_DB_PATH = os.path.join("databases", "transactions.db")
 BUDGETS_DB_PATH = os.path.join("databases", "budgets.db")
+INVESTMENTS_DB_PATH = os.path.join("databases", "investments.db")
+
 user_id = None
 
 
@@ -91,7 +93,7 @@ def generate_comparison(year, month):
         transactions_dict["Total"] = transactions_total - transactions_dict["Income"]
     else:
         transactions_dict["Total"] = transactions_total
-        transactions_dict['Income'] = 0
+        transactions_dict["Income"] = 0
 
     for category in categories:
         if category not in transactions_dict:
@@ -154,7 +156,25 @@ def generate_comparison(year, month):
             print(
                 f"Total \t\t {transactions_dict['Income']} \t\t {transactions_dict['Total']} \t\t {budgets_dict['Total']}"
             )
-    input('\n Press any key to exit the report.. ')
+    input("\n Press any key to exit the report.. ")
+    clear()
+
+
+def maturity():
+    conn = sqlite3.connect(INVESTMENTS_DB_PATH)
+    c = conn.cursor()
+    c.execute(
+        "SELECT * FROM investments WHERE user_id = ? ORDER BY year_maturity DESC, future_value DESC",
+        (user_id,),
+    )
+    investments = c.fetchall()
+    conn.close()
+
+    print('Maturity Year   Item \t\t Principal \t Interest \t Future Value')
+    for investment in investments:
+        print(f'{investment[5]} \t\t {investment[1]} \t {investment[3]} \t {investment[4]*100}% \t {int(investment[6] * 100 + 0.9999)/100}')
+
+    input("\n Press any key to exit the report.. ")
     clear()
 
 
@@ -177,7 +197,7 @@ def reports(user_id_passed):
             case "1":
                 comparison()
             case "2":
-                print("view investment maturity module goes here")
+                maturity()
             case "3":
                 clear()
                 return None
