@@ -76,7 +76,7 @@ What monthly budget category would you want to enter?
     amount = input("Enter budget amount in USD: ")
     month = input("Enter month of this budget (Ex: 02): ")
     year = input("Enter year of this budget (Ex: 2024): ")
-    date = f"{year}-{month}-{1}"
+    date = f"{year}-{month}-01"
 
     conn = sqlite3.connect(BUDGETS_DB_PATH)
     c = conn.cursor()
@@ -168,7 +168,7 @@ What category does this budget fall?
     amount = input("Re-enter budget amount in USD: ")
     month = input("Re-enter the budget month (Ex: 02): ")
     year = input("Re-enter the budget year (Ex: 2024): ")
-    date = f"{year}-{month}-{1}"
+    date = f"{year}-{month}-01"
     conn = sqlite3.connect(BUDGETS_DB_PATH)
     c = conn.cursor()
     c.execute(
